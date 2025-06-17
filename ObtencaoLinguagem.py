@@ -12,6 +12,13 @@ class ObtencaoLinguagem:
         if table:
             for row in table.tbody.find_all('tr'):
                 cols = row.find_all('td')
-                if len(cols) >= 5:
-                    linguagens.append(cols[4].get_text(strip=True))
+                if len(cols) >= 7:
+                    linguagem = cols[4].get_text(strip=True)
+                    rating = cols[5].get_text(strip=True)
+                    change = cols[6].get_text(strip=True)
+                    linguagens.append({
+                        'linguagem': linguagem,
+                        'rating': rating,
+                        'change': change
+                    })
         return linguagens
