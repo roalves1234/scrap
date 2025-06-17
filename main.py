@@ -1,4 +1,5 @@
 import requests
+from Comum.Utils.utils import FileTool
 
 url = "https://www.tiobe.com/tiobe-index/"
 headers = {
@@ -8,6 +9,7 @@ headers = {
 response = requests.get(url, headers=headers)
 
 if response.status_code == 200:
-    print(response.text)  
+    FileTool('response.html').save(response.text)
+    print('Response salvo em response.html')
 else:
     print(f"Erro: {response.status_code}")
