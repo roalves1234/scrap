@@ -1,0 +1,4 @@
+.env
+LLM/__pycache__/
+Models/__pycache__/
+Utils/__pycache__/
