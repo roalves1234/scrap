@@ -18,6 +18,8 @@ class ObtencaoHtml:
 
     def get(self):
         if os.path.exists(self.output_file):
+          print(f"Carregando do arquivo...")
           return FileTool(self.output_file).load()
         else:
+          print(f"Obtendo da URL...")
           return self.get_from_url()
