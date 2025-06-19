@@ -67,7 +67,7 @@ class Equipe:
                 "Foque em fóruns, artigos de opinião e discussões técnicas com comentários reais de desenvolvedores."
             ),
             expected_output=(
-                "Pelo menos 2 URLs com opiniões ou críticas reais de programadores sobre a linguagem {linguagem}."
+                "Pelo menos 2 URLs que tem mais a ver com opiniões ou críticas reais de programadores sobre a linguagem {linguagem}."
             ),
             tools=[search_tool],
             agent=pesquisador
@@ -89,9 +89,9 @@ class Equipe:
         # Tarefa 3: Resumo
         resumo_task = Task(
             description=(
-                "Com base em todos os conteúdos lidos nas tarefas anteriores, escreva um resumo com cerca de 8 linhas. "
+                "Com base em todos os conteúdos coletados das URLs, escreva um resumo com cerca de 8 linhas, citando inclusive as fontes como sendo o nome da empresa ou pessoa donas do site."
                 "O resumo deve destacar os principais pontos positivos e negativos mencionados pelos programadores, "
-                "bem como qualquer percepção geral sobre a linguagem."
+                "bem como qualquer percepção geral sobre a linguagem. Não faça comentários a parte, somente em cima do conteúdo coletado."
             ),
             expected_output=(
                 "Um resumo de aproximadamente 8 linhas cobrindo os temas centrais abordados nos textos."
