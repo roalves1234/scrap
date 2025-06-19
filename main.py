@@ -1,19 +1,19 @@
 print("Inicializando...")
 from ObtencaoHtml import ObtencaoHtml
 from ObtencaoLinguagem import ObtencaoLinguagem
-from Comum.Utils.utils import FileTool
-from Work import Work
+from Work import WorkLinguagem, WorkFile
 
+work_file = WorkFile()
+work_linguagem = WorkLinguagem()
 html = ObtencaoHtml().get()
 linguagens = ObtencaoLinguagem = ObtencaoLinguagem(html).get()
-arquivo_resultado = FileTool('resultado.md')
-arquivo_resultado.save("")
+quantidade = 2
 
-print('\n')
-resultado = ""
-quantidade = 4
+work_file.clear()
+work_file.add("# LINGUAGENS MAIS USADAS\n\n")
+work_file.add(work_linguagem.get_lista(linguagens))
 
+work_file.add("\n\n")
+work_file.add(f"# COMENTÁRIOS SOBRE AS {quantidade} PRIMEIRAS LINGUAGENS\n\n")
 for linguagem in linguagens[:quantidade]:
-    print(f"** Linguagem: {linguagem.get('name')} **\n")
-    resultado += Work().get(linguagem)
-    arquivo_resultado.save(resultado) 
+    work_file.add(work_linguagem.get_comentarios(linguagem))
