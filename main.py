@@ -11,8 +11,9 @@ arquivo_resultado.save("")
 
 print('\n')
 resultado = ""
+quantidade = 4
 
-for linguagem in linguagens[:2]:
+for linguagem in linguagens[:quantidade]:
     print(f"** Linguagem: {linguagem.get('name')} **\n")
     resultado += Work().get(linguagem)
     arquivo_resultado.save(resultado) 

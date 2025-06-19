@@ -7,6 +7,7 @@ class Work:
         resultado = ""
         resultado += f"## Linguagem: {linguagem.get('name')}  |  Percentual de participação: {linguagem.get('rating')}  |  Taxa de crescimento: {linguagem.get('change')} ##\n\n"
         resultado += ColetagemOpiniaoUsuario().get(linguagem.get('name'))
+        
         resultado += '\n\n\n'
         
         return(resultado)
