@@ -1,4 +1,4 @@
-print("Carregamento das bibliotecas")
+print("Carregando as bibliotecas...")
 import os
 from crewai import LLM, Agent, Task, Crew, Process
 from crewai_tools import SerperDevTool, ScrapeWebsiteTool
@@ -92,7 +92,7 @@ class Equipe:
             ),
             expected_output=(
                 "Uma lista contendo 5 opiniões ou críticas sobre a linguagem, sendo 3 opiniões ou críticas positivas e 2 negativas."
-                "Cada item deve deve ser citado também a fonte da informação, que pode ser o nome da empresa ou nome do site da onde se coletou a informação."
+                "Cada item deve deve ser associado também a fonte da informação, que é a URL da onde a informação foi extraída originalmente."
             ),
             tools=[],
             agent=coletor
@@ -119,9 +119,11 @@ class Equipe:
                 "Não adicione nenhum comentários a parte, fixe sua atenção somente em cima do conteúdo coletado."
             ),
             expected_output=(
-                "Uma lista contendo 5 opiniões ou críticas sobre a linguagem no formato de bullet points, sendo 3 opiniões ou críticas positivas e 2 negativas, juntamente com a fonte da informação que pode ser o nome da empresa ou nome do site da onde se coletou a informação."
-                "Cada item não deve ultrapassar 3 linhas, nem que para isso seja necessário aplicar um resumo sobre a informação."
-                "Por fim relacionar também as URLs de onde foram extraídas as informações."
+                "Espera-se 2 listas separadas:"
+                "**A primeira lista ** não possui título e deve conter 5 opiniões ou críticas sobre a linguagem no formato de bullet points, sendo 3 opiniões ou críticas que expressam um conteúdo positivo e 2 que expressam um conteúdo negativo."
+                "Cada item deve corresponder a um único parágrafo de no máximo 3 linhas de um texto fluido, nem que para isso seja necessário aplicar um resumo."
+                "Informe somente os itens da lista sem a colcoação de nenhum título ou subtítulo."
+                "**A segunda lista** possui o título 'Fonte' e deve relacionar as URLs de onde foram extraídas as informações e dos quais essa redação se baseou (somente as URLs sem nenhuma informação adicional sobre elas)."
             ),
             tools=[],
             agent=redator
@@ -136,7 +138,5 @@ class Equipe:
             process=Process.sequential
         )
 
-        print("*** Execução da crew ***")
-        # Execução da crew
-        result = crew.kickoff(inputs={"linguagem": linguagem})
-        print(result)
+        print("Executando a crew...")
+        return(crew.kickoff(inputs={"linguagem": linguagem}))

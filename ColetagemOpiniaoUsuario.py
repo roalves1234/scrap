@@ -5,4 +5,4 @@ class ColetagemOpiniaoUsuario:
         pass
     
     def get(self, linguagem):
-        print(Equipe().get(linguagem))
+        return(Equipe().get(linguagem))

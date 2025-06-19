@@ -6,6 +6,7 @@ html = ObtencaoHtml().get()
 linguagens = ObtencaoLinguagem = ObtencaoLinguagem(html).get()
 
 #for linguagem in linguagens:
-#    print(linguagem)
-    
+#    print(linguagem) 
+
 resultado_pesquisa = ColetagemOpiniaoUsuario().get("Python")
+print(resultado_pesquisa)
