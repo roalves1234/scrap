@@ -14,6 +14,6 @@ work_file.add("# LINGUAGENS MAIS USADAS\n\n")
 work_file.add(work_linguagem.get_lista(linguagens))
 
 work_file.add("\n\n")
-work_file.add(f"# COMENTÁRIOS SOBRE AS {quantidade} PRIMEIRAS LINGUAGENS\n\n")
+work_file.add(f"# COMENTÁRIOS SOBRE AS {quantidade} LINGUAGENS MAIS USADAS\n\n")
 for linguagem in linguagens[:quantidade]:
     work_file.add(work_linguagem.get_comentarios(linguagem))
