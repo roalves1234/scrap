@@ -92,7 +92,7 @@ class Equipe:
             ),
             expected_output=(
                 "Uma lista contendo 5 opiniões ou críticas sobre a linguagem, sendo 3 opiniões ou críticas positivas e 2 negativas."
-                "Cada item deve deve ser associado também a fonte da informação, que é a URL da onde a informação foi extraída originalmente."
+                "Cada item deve deve ser associado também a fonte da informação, que é a URL completa da onde a informação foi extraída originalmente."
             ),
             tools=[],
             agent=coletor
@@ -121,9 +121,9 @@ class Equipe:
             expected_output=(
                 "Espera-se 2 listas separadas:"
                 "**A primeira lista ** não possui título e deve conter 5 opiniões ou críticas sobre a linguagem no formato de bullet points, sendo 3 opiniões ou críticas que expressam um conteúdo positivo e 2 que expressam um conteúdo negativo."
-                "Cada item deve corresponder a um único parágrafo de no máximo 3 linhas de um texto fluido, nem que para isso seja necessário aplicar um resumo."
+                "Cada item deve corresponder a um único parágrafo de cerca de 2 linhas de um texto fluido, nem que para isso seja necessário aplicar um resumo."
                 "Informe somente os itens da lista sem a colcoação de nenhum título ou subtítulo."
-                "**A segunda lista** possui o título 'Fonte' e deve relacionar as URLs de onde foram extraídas as informações e dos quais essa redação se baseou (somente as URLs sem nenhuma informação adicional sobre elas)."
+                "**A segunda lista** possui o título 'Fonte:' e deve relacionar as URLs de onde foram extraídas as informações e dos quais essa redação se baseou (informe as URLs completas sem nenhuma informação adicional sobre elas)."
             ),
             tools=[],
             agent=redator
