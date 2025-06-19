@@ -1,8 +1,8 @@
-from Crew.crew import Crew
+from Equipe import Equipe
 
 class ColetagemOpiniaoUsuario:
     def __init__(self):
         pass
     
     def get(self, linguagem):
-        print(Crew().get(linguagem))
+        print(Equipe().get(linguagem))

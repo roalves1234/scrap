@@ -1,19 +1,21 @@
+print("Carregamento das bibliotecas")
 import os
-from crewai import Agent, Task, Crew, Process
+from crewai import LLM, Agent, Task, Crew, Process
 from crewai_tools import SerperDevTool, ScrapeWebsiteTool
-from crewai.llms import ChatOpenAI
 
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 os.environ["SERPER_API_KEY"] = os.getenv("SERPER_API_KEY")
 
-class Crew:
+class Equipe:
     def __init__(self):
         pass 
     
     def get(self, linguagem):
+       
         # Ferramentas
         search_tool = SerperDevTool()
         scraper_tool = ScrapeWebsiteTool()
+        llm_4o_mini = LLM(model="openai/gpt-4o-mini")
 
         # Agente 1: Pesquisador
         pesquisador = Agent(
@@ -55,7 +57,7 @@ class Crew:
             memory=True,
             tools=[],
             allow_delegation=False,
-            llm=ChatOpenAI(model="gpt-4")
+            llm=llm_4o_mini
         )
 
         # Tarefa 1: Pesquisa
@@ -74,7 +76,7 @@ class Crew:
         # Tarefa 2: Coleta de conteúdo
         coleta_task = Task(
             description=(
-                "Acesse cada uma das URLs fornecidas pela tarefa anterior e colete o conteúdo legível de cada página. "
+                "Acesse cada uma das URLs fornecidas pela tarefa anterior e colete o conteúdo legível de cada URL. "
                 "Remova qualquer conteúdo irrelevante como menus, rodapés ou anúncios."
             ),
             expected_output=(
@@ -102,9 +104,11 @@ class Crew:
         crew = Crew(
             agents=[pesquisador, coletor, redator],
             tasks=[pesquisa_task, coleta_task, resumo_task],
+            output_log_file="crewlog.txt",
             process=Process.sequential
         )
 
+        print("*** Execução da crew ***")
         # Execução da crew
         result = crew.kickoff(inputs={"linguagem": linguagem})
         print(result)
