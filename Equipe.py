@@ -12,18 +12,18 @@ class Equipe:
     
     def get(self, linguagem):
        
-        # Ferramentas
+        ### FERRAMENTAS ###
         search_tool = SerperDevTool()
         scraper_tool = ScrapeWebsiteTool()
         llm_4o_mini = LLM(model="openai/gpt-4o-mini")
 
-        # Agente 1: Pesquisador
+
+        ### O PESQUISADOR ###
         pesquisador = Agent(
-            role='Pesquisador de Opiniões sobre Linguagens',
-            goal='Encontrar críticas e opiniões reais de programadores sobre {linguagem}',
+            role='Pesquisador de críticas ou opiniões sobre Linguagens',
+            goal='Encontrar críticas e opiniões tanto positivas quanto negativas de programadores sobre a linguagem {linguagem}',
             backstory=(
-                "Você é um pesquisador experiente, com foco em entender como as linguagens "
-                "de programação são percebidas pela comunidade."
+                "Você é um pesquisador experiente, com foco em entender como a referida linguagem de programação é percebida pela comunidade."
             ),
             verbose=True,
             memory=True,
@@ -31,13 +31,25 @@ class Equipe:
             allow_delegation=True
         )
 
-        # Agente 2: Coletor de Conteúdo
-        coletor = Agent(
-            role='Coletor de Conteúdo de URLs',
+        pesquisa_task = Task(
+            description=(
+                "Pesquise no Google por opiniões ou críticas tanto positivas quanto negativas feitas por programadores sobre a linguagem {linguagem}. "
+                "Foque em fóruns, artigos de opinião e discussões técnicas com comentários reais de desenvolvedores."
+            ),
+            expected_output=(
+                "Pelo menos 3 URLs que tem maior probabilidade de conter opiniões ou críticas tanto positivas quanto negativas de programadores sobre a linguagem {linguagem}."
+            ),
+            tools=[search_tool],
+            agent=pesquisador
+        )
+
+
+        ### O EXTRATOR ###
+        extrator = Agent(
+            role='Extrator de conteúdo de URLs',
             goal='Extrair conteúdo de leitura de páginas da web',
             backstory=(
-                "Você é especialista em extrair conteúdo limpo e legível de páginas web, "
-                "removendo tudo que não é relevante para leitura."
+                "Você é especialista em extrair conteúdo limpo e legível de páginas web, removendo tudo que não é relevante para leitura."
             ),
             verbose=True,
             memory=True,
@@ -45,13 +57,25 @@ class Equipe:
             allow_delegation=False
         )
 
-        # Agente 3: Redator Resumidor
-        redator = Agent(
-            role='Redator Técnico',
-            goal='Resumir as opiniões encontradas sobre a linguagem {linguagem}',
+        extracao_task = Task(
+            description=(
+                "Acesse cada uma das URLs fornecidas pela tarefa anterior e extraia o conteúdo limpo e legível de cada URL. "
+                "Remova qualquer conteúdo irrelevante como menus, rodapés ou anúncios."
+            ),
+            expected_output=(
+                "Conteúdo limpo e legível de cada URL fornecida, pronto para ser trabalhado pelo redator."
+            ),
+            tools=[scraper_tool],
+            agent=extrator
+        )
+
+
+        ### O COLETOR ###
+        coletor = Agent(
+            role='Coletor de opiniões ou críticas sobre a linguagem',
+            goal='Encontrar as opiniões ou críticas tanto positivas como negativas sobre a linguagem {linguagem}.',
             backstory=(
-                "Você é um redator técnico com talento para sintetizar grandes volumes de informação "
-                "em resumos claros, objetivos e bem estruturados."
+                "Você é um coletor técnico com talento para compreender grandes volumes de informação, e encontrar o que é necessário para a futura redação."
             ),
             verbose=True,
             memory=True,
@@ -60,50 +84,54 @@ class Equipe:
             llm=llm_4o_mini
         )
 
-        # Tarefa 1: Pesquisa
-        pesquisa_task = Task(
+        coletagem_task = Task(
             description=(
-                "Pesquise no Google por opiniões ou críticas feitas por programadores sobre a linguagem {linguagem}. "
-                "Foque em fóruns, artigos de opinião e discussões técnicas com comentários reais de desenvolvedores."
+                "Com base em todos os conteúdos extraídos das URLs, procure opiniões ou críticas positivas ou negativas sobre a linguagem."
+                "Cada opinião ou crítica deve destacar os principais pontos mencionados pelos programadores, bem como qualquer percepção geral sobre a linguagem."
+                "Não adicione comentários a parte,foque somente no conteúdo extraído."
             ),
             expected_output=(
-                "Pelo menos 2 URLs que tem mais a ver com opiniões ou críticas reais de programadores sobre a linguagem {linguagem}."
+                "Uma lista contendo 5 opiniões ou críticas sobre a linguagem, sendo 3 opiniões ou críticas positivas e 2 negativas."
+                "Cada item deve deve ser citado também a fonte da informação, que pode ser o nome da empresa ou nome do site da onde se coletou a informação."
             ),
-            tools=[search_tool],
-            agent=pesquisador
-        )
-
-        # Tarefa 2: Coleta de conteúdo
-        coleta_task = Task(
-            description=(
-                "Acesse cada uma das URLs fornecidas pela tarefa anterior e colete o conteúdo legível de cada URL. "
-                "Remova qualquer conteúdo irrelevante como menus, rodapés ou anúncios."
-            ),
-            expected_output=(
-                "Conteúdo limpo e legível de cada URL fornecida, pronto para ser resumido."
-            ),
-            tools=[scraper_tool],
+            tools=[],
             agent=coletor
         )
 
-        # Tarefa 3: Resumo
-        resumo_task = Task(
+
+        ### O REDATOR ###
+        redator = Agent(
+            role='Redator Técnico',
+            goal='Organizar as opiniões ou críticas tanto positivas como negativas sobre a linguagem {linguagem}',
+            backstory=(
+                "Você é um redator técnico com talento para organizar e resumir as informações coletadas, gerando assim uma boa redação final."
+            ),
+            verbose=True,
+            memory=True,
+            tools=[],
+            allow_delegation=False,
+            llm=llm_4o_mini
+        )
+
+        redacao_task = Task(
             description=(
-                "Com base em todos os conteúdos coletados das URLs, escreva um resumo com cerca de 8 linhas, citando inclusive as fontes como sendo o nome da empresa ou pessoa donas do site."
-                "O resumo deve destacar os principais pontos positivos e negativos mencionados pelos programadores, "
-                "bem como qualquer percepção geral sobre a linguagem. Não faça comentários a parte, somente em cima do conteúdo coletado."
+                "Organize em forma de lista todas opiniões ou críticas positivas ou negativas coletadas sobre a linguagem."
+                "Não adicione nenhum comentários a parte, fixe sua atenção somente em cima do conteúdo coletado."
             ),
             expected_output=(
-                "Um resumo de aproximadamente 8 linhas cobrindo os temas centrais abordados nos textos."
+                "Uma lista contendo 5 opiniões ou críticas sobre a linguagem no formato de bullet points, sendo 3 opiniões ou críticas positivas e 2 negativas, juntamente com a fonte da informação que pode ser o nome da empresa ou nome do site da onde se coletou a informação."
+                "Cada item não deve ultrapassar 3 linhas, nem que para isso seja necessário aplicar um resumo sobre a informação."
+                "Por fim relacionar também as URLs de onde foram extraídas as informações."
             ),
             tools=[],
             agent=redator
         )
 
-        # Crew com 3 agentes e tarefas sequenciais
+
+        ### A EQUIPE ###
         crew = Crew(
-            agents=[pesquisador, coletor, redator],
-            tasks=[pesquisa_task, coleta_task, resumo_task],
+            agents=[pesquisador, extrator, coletor, redator],
+            tasks=[pesquisa_task, extracao_task, coletagem_task, redacao_task],
             output_log_file="crewlog.txt",
             process=Process.sequential
         )
