@@ -7,11 +7,11 @@ os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 os.environ["SERPER_API_KEY"] = os.getenv("SERPER_API_KEY")
 
 class Equipe:
-    def __init__(self):
-        pass 
+    def __init__(self, verbose: bool):
+        self.verbose = verbose
     
     def get(self, linguagem):
-       
+      
         ### FERRAMENTAS ###
         search_tool = SerperDevTool()
         scraper_tool = ScrapeWebsiteTool()
@@ -25,7 +25,7 @@ class Equipe:
             backstory=(
                 "Você é um pesquisador experiente, com foco em entender como a referida linguagem de programação é percebida pela comunidade."
             ),
-            verbose=True,
+            verbose=self.verbose,
             memory=True,
             tools=[search_tool],
             allow_delegation=True
@@ -51,7 +51,7 @@ class Equipe:
             backstory=(
                 "Você é especialista em extrair conteúdo limpo e legível de páginas web, removendo tudo que não é relevante para leitura."
             ),
-            verbose=True,
+            verbose=self.verbose,
             memory=True,
             tools=[scraper_tool],
             allow_delegation=False
@@ -77,7 +77,7 @@ class Equipe:
             backstory=(
                 "Você é um coletor técnico com talento para compreender grandes volumes de informação, e encontrar o que é necessário para a futura redação."
             ),
-            verbose=True,
+            verbose=self.verbose,
             memory=True,
             tools=[],
             allow_delegation=False,
@@ -106,7 +106,7 @@ class Equipe:
             backstory=(
                 "Você é um redator técnico com talento para organizar e resumir as informações coletadas, gerando assim uma boa redação final."
             ),
-            verbose=True,
+            verbose=self.verbose,
             memory=True,
             tools=[],
             allow_delegation=False,
@@ -121,7 +121,7 @@ class Equipe:
             expected_output=(
                 "Espera-se 2 listas separadas:"
                 "**A primeira lista ** não possui título e deve conter 5 opiniões ou críticas sobre a linguagem no formato de bullet points, sendo 3 opiniões ou críticas que expressam um conteúdo positivo e 2 que expressam um conteúdo negativo."
-                "Cada item deve corresponder a um único parágrafo de cerca de 2 linhas de um texto fluido, nem que para isso seja necessário aplicar um resumo."
+                "Cada item deve corresponder a um único parágrafo de cerca de 2 linhas de um texto fluido (sem a necessidade de citar a fonte), nem que para isso seja necessário aplicar um resumo."
                 "Informe somente os itens da lista sem a colcoação de nenhum título ou subtítulo."
                 "**A segunda lista** possui o título 'Fonte:' e deve relacionar as URLs de onde foram extraídas as informações e dos quais essa redação se baseou (informe as URLs completas sem nenhuma informação adicional sobre elas)."
             ),
@@ -138,5 +138,4 @@ class Equipe:
             process=Process.sequential
         )
 
-        print("Executando a crew...")
         return(crew.kickoff(inputs={"linguagem": linguagem}))

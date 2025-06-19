@@ -8,5 +8,5 @@ linguagens = ObtencaoLinguagem = ObtencaoLinguagem(html).get()
 
 for linguagem in linguagens[:3]:
     print('\n\n')
-    print(f"*** Linguagem: {linguagem.get('name')} | Percentual de participação: {linguagem.get('rating')} | Taxa de crescimento: {linguagem.get('change')} ***")
-    print(ColetagemOpiniaoUsuario().get(linguagem.get('name')))
+    print(f"\033[1m## Linguagem: {linguagem.get('name')}  |  Percentual de participação: {linguagem.get('rating')}  |  Taxa de crescimento: {linguagem.get('change')} ##\n\033[0m")
+    print(ColetagemOpiniaoUsuario(False).get(linguagem.get('name')))
