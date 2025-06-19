@@ -138,4 +138,5 @@ class Equipe:
             process=Process.sequential
         )
 
-        return(crew.kickoff(inputs={"linguagem": linguagem}))
+        resultado = crew.kickoff(inputs={"linguagem": linguagem})
+        return(str(resultado))
