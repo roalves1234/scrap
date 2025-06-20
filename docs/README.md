@@ -112,8 +112,33 @@ Citação das Licenças de Datasets ou APIs Utilizadas
 O software utiliza diversas bibliotecas e serviços de terceiros, cada um com suas
 licenças e termos de uso:
 
+@@@@
+## 📊 Dados Coletados
 
-## Licenças
+Para cada linguagem de programação, o sistema coleta:
+
+- **Nome da linguagem**
+- **Percentual de participação** no índice TIOBE
+- **Taxa de crescimento** mensal
+- **Opiniões positivas** da comunidade
+- **Opiniões negativas** da comunidade
+- **Análise consolidada** baseada em múltiplas fontes
+
+## Contribuição
+
+Contribuições são bem-vindas! Por favor:
+
+1. Faça fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+## Licença de terceiros
 - Python: Python Software Foundation License (PSF)
 - requests: Apache License
 - BeautifulSoup: MIT License
@@ -121,6 +146,23 @@ licenças e termos de uso:
 - Serper API (Google Search API): Sujeito aos seus Termos de Serviço.
 - ChatGPT  o mini API (OpenAI): Sujeito aos Termos de Uso da OpenAI e Política de Uso.
 
+## 🔧 Configuração Avançada
+
+### Personalização do Número de Linguagens
+
+No arquivo `main.py`, você pode ajustar a variável `quantidade` para processar mais ou menos linguagens:
+
+```python
+quantidade = 2  # Processa as 2 linguagens mais populares
+```
+
+### Configuração de Verbosidade
+
+Para logs mais detalhados durante a execução:
+
+```python
+work_linguagem = WorkLinguagem(verbose=True)
+```
 
 ## Observações
 - Certifique-se de possuir as chaves de API necessárias.
@@ -128,4 +170,5 @@ licenças e termos de uso:
 
 ---
 
-Desenvolvido para fins acadêmicos e de pesquisa.
+**Desenvolvido com ❤️ para a comunidade de desenvolvedores** 
+

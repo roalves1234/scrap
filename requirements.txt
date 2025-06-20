@@ -1,7 +1,0 @@
-requests
-beautifulsoup4
-python-dotenv
-openai
-google-generativeai
-crewai
-crewai-tools
