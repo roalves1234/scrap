@@ -130,7 +130,7 @@ class Equipe:
         )
 
 
-        ### A EQUIPE ###
+        ### A EQUIPE COMPLETA ###
         crew = Crew(
             agents=[pesquisador, extrator, coletor, redator],
             tasks=[pesquisa_task, extracao_task, coletagem_task, redacao_task],

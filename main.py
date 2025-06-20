@@ -7,7 +7,7 @@ work_file = WorkFile()
 work_linguagem = WorkLinguagem()
 html = ObtencaoHtml().get()
 linguagens = ObtencaoLinguagem = ObtencaoLinguagem(html).get()
-quantidade = 2
+quantidade = 3
 
 work_file.clear()
 work_file.add("# LINGUAGENS MAIS USADAS\n\n")
