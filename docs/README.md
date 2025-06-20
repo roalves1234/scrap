@@ -146,7 +146,7 @@ Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICE
 - Serper API (Google Search API): Sujeito aos seus Termos de Serviço.
 - ChatGPT  o mini API (OpenAI): Sujeito aos Termos de Uso da OpenAI e Política de Uso.
 
-## 🔧 Configuração Avançada
+## Configuração Avançada
 
 ### Personalização do Número de Linguagens
 
