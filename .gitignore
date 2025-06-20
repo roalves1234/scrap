@@ -3,4 +3,7 @@
 *.json
 .env
 *.txt
+!requirements.txt
 resultado.md
+venv
+.venv
