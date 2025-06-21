@@ -8,7 +8,7 @@ class WorkLinguagem:
     def get_comentarios(self, linguagem):
         print(f"** Linguagem: {linguagem.get('name')} **\n")
         resultado = ""
-        resultado += f"## Linguagem: {linguagem.get('name')}  |  Percentual de participação: {linguagem.get('rating')}  |  Taxa de crescimento: {linguagem.get('change')} ##\n\n"
+        resultado += f"## Linguagem: {linguagem.get('name')}  |  Percentual de participação: {linguagem.get('rating')}  |  Taxa de crescimento: {linguagem.get('change')}\n\n"
         resultado += ColetagemOpiniaoUsuario(self.verbose).get(linguagem.get('name'))
 
         resultado += '\n\n\n'

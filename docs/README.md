@@ -112,8 +112,7 @@ Citação das Licenças de Datasets ou APIs Utilizadas
 O software utiliza diversas bibliotecas e serviços de terceiros, cada um com suas
 licenças e termos de uso:
 
-@@@@
-## 📊 Dados Coletados
+## Dados Coletados
 
 Para cada linguagem de programação, o sistema coleta:
 
